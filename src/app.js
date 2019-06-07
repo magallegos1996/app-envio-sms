@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require ('cors');
+const bodyParser = require('body-parser');
+const smsController = require('./controllers/sms.controller');
 
 const app = express();
 
@@ -10,9 +12,10 @@ app.use(cors());
 
 //Middlewares
 app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); //con este metodo nos ayudará a que el servidor pueda entender los datos que vengan desde el navegador. Se tomarán estos datos con req.body
 
 //Routes
-
+app.use(require('./routes/sms'), smsController.enviarMensaje);
 
 module.exports = app;
